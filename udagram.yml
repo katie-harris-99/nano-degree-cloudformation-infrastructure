@@ -37,11 +37,6 @@ Resources:
         FromPort: 80
         ToPort: 80
         SourceSecurityGroupId: !Ref LBSecGroup
-      SecurityGroupEgress:
-      - IpProtocol: tcp
-        FromPort: 0
-        ToPort: 65535
-        CidrIp: 0.0.0.0/0
 
   WebAppLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
@@ -118,6 +113,7 @@ Resources:
         LaunchTemplateId: !Ref WebAppLaunchTemplate
         Version: !GetAtt WebAppLaunchTemplate.LatestVersionNumber
       MinSize: '4'
+      DesiredCapacity: '4'
       MaxSize: '6'
       TargetGroupARNs:
       - Ref: WebAppTargetGroup
